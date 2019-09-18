@@ -1,0 +1,63 @@
+<div class="page">
+
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">Edit Offer - {{offer.name}}</h2>
+        </div>
+
+
+        <div class="col-md-12">
+            <section class="panel panel-default">
+                <div class="panel-body">
+                    <div  class="ui-wizard-form wizard clearfix" role="application" id="steps-uid-0">
+                        <div class="steps clearfix">
+                            <ul role="tablist">
+
+                                <li role="tab" class="{{wizard.steps[0].headerClass}}">
+                                    <a id="steps-uid-0-t-0" href="">
+                                        <span class="number">1.</span> General Configuration
+                                    </a>
+                                </li>
+
+                                <li role="tab" class="{{wizard.steps[1].headerClass}}">
+                                    <a id="steps-uid-0-t-1" href="">
+                                        <span class="number">2.</span> Segmentation
+                                    </a>
+                                </li>
+
+                                <li role="tab" class="{{wizard.steps[2].headerClass}}">
+                                    <a id="steps-uid-0-t-2" href="">
+                                        <span class="number">3.</span> Delivery
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <form>
+                            <div class="content clearfix" ng-include="" src="wizard.currentTemplate"></div>
+                        </form>
+
+                        <div class="actions clearfix">
+                            <ul role="menu" aria-label="Pagination">
+                                <li class="{{wizard.buttonPreviousStatus}}">
+                                    <a href="" ng-click="previous()" role="menuitem">Previous</a>
+                                </li>
+                                <li class="{{wizard.buttonNextStatus}}">
+                                    <a href="" ng-click="next()" role="menuitem">Next</a>
+                                </li>
+                                <li style="{{wizard.isButtonFinishVisible}}">
+                                    <a href="" ng-click="update()" role="menuitem">Update</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+
+    </div>
+
+
+</div>

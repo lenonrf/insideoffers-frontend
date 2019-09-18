@@ -1,0 +1,52 @@
+<section class="page-form-ele page">
+<div class="row ui-section">
+    <div class="col-lg-8 clearfix"> <h2 class="section-header">New Affiliation</h2> </div>
+    <div class="col-md-12">
+        <section class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+
+                        <div layout="column" ng-cloak class="md-inline-form inputdemoBasicUsage">
+                            <md-content layout-padding>
+                                <form name="affiliationForm" class="form-horizontal form-validation" ng-submit="create()">
+
+                                    <div layout layout-sm="column">
+
+                                        <md-input-container flex>
+                                            <label>Name</label>
+                                            <input required type="text" name="name" ng-model="affiliation.name"/>
+                                        </md-input-container>
+                                        <md-input-container flex>
+                                            <label>Code</label>
+                                            <input required type="text" name="code" ng-model="affiliation.code"/>
+                                        </md-input-container>
+                                    </div>
+
+                                    <md-input-container class="md-block">
+                                        <label>Description</label>
+                                        <input type="text" name="description" ng-model="affiliation.description">
+                                    </md-input-container>
+
+                                    <md-input-container class="md-block">
+                                        <label>HO Affiliation Id</label>
+                                        <input ng-model="affiliation.codeProvider">
+                                    </md-input-container>
+
+                                    <md-input-container class="md-block">
+                                        <md-button data-ng-disabled="!canSubmit()" type="submit"
+                                                   class="md-raised btn-w-md md-primary btn-block btn-md">Create</md-button>
+                                        <div class="divider"></div>
+                                    </md-input-container>
+
+                                </form>
+                            </md-content>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</section>

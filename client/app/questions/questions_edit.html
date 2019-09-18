@@ -1,0 +1,27 @@
+<div class="page page-table">
+
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">
+                Edit Question
+            </h2>
+        </div>
+        <div class="col-md-12">
+            <form name="form" class="form-horizontal form-validation" ng-submit="update()">
+                <section class="panel panel-default table-dynamic">
+                    <div class="panel-body">
+                        <question data="mainQuestion" key="mainQuestion"/>
+                        <div style="padding-top: 15px;">
+                            <md-button data-ng-disabled="!canSubmit()" type="submit"
+                                       class="md-raised btn-w-xs md-primary pull-right">Update</md-button>
+                        </div>
+                    </div>
+                </section>
+            </form>
+
+        </div>
+
+
+    </div>
+
+</div>

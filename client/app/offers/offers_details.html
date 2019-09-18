@@ -1,0 +1,408 @@
+
+
+
+
+
+<div class="page page-dashboard">
+
+
+	<div class="row">
+        <div class="col-lg-12">
+            <h2 class="section-header">Details - {{offer.name}}</h2>
+        </div>
+    </div>
+
+    
+
+
+
+    <div class="row">
+		<div class="col-lg-12">
+
+        <uib-accordion close-others="oneAtATime" class="ui-accordion">
+            <uib-accordion-group heading="Data Filter" is-open="false">
+                <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <div layout layout-sm="column">
+                                <md-input-container flex="{{(dateFilterType === 'custom') ? '50' : '100'}}" >
+                                    <label>Date Filter Type</label>
+                                    <md-select ng-model="dateFilterType" 
+                                        ng-change="filterOfferType(dateFilterType)">
+                                        <md-option value="all_time">All Time</md-option>
+                                        <md-option selected value="this_month">This Month</md-option>
+                                        <md-option value="this_week">This Week</md-option>
+                                        <md-option value="today">Today</md-option>
+                                        <md-option value="custom">Custom</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <md-datepicker ng-show="dateFilterType === 'custom'" flex="20" ng-model="dateStartFilter" md-placeholder="Date Start"></md-datepicker>
+                                <md-datepicker ng-show="dateFilterType === 'custom'" flex="20" ng-model="dateEndFilter" md-placeholder="Date Start"></md-datepicker>
+
+                                <md-button ng-show="dateFilterType === 'custom'" flex="10" ng-click="filterOfferCustom(dateFilterType, dateStartFilter, dateEndFilter)" class="md-raised btn-w-xs md-primary">Filter</md-button>
+                            </div>
+
+                        </div>
+
+                    </div>
+            </uib-accordion-group>
+        </uib-accordion>
+
+		</div>
+	</div>
+
+
+	
+		<div class="row" ng-if="!showChartData">
+			<div class="col-lg-12 col-xsm-12">
+				<md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+			</div>
+		</div>
+	
+
+    <div class="row" ng-if="showChartData">
+       <!-- Stats -->
+        <div class="col-lg-4 col-md-4 col-xsm-4">
+            <div class="panel panel-box">
+                <div class="panel-top">
+                    <span class="zmdi zmdi-mouse color-success"></span>
+                </div>
+                <div class="panel-info">
+                    <span>CLICKS </span>
+                </div>
+                <div class="panel-bottom bg-light">
+                    <span style="font-size: 31px">{{offer.stats.clicks}} </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-xsm-4">
+            <div class="panel panel-box">
+                <div class="panel-top">
+                    <span class="zmdi zmdi-picture-in-picture color-success"></span>
+                </div>
+                <div class="panel-info">
+                    <span>Impressions</span>
+                </div>
+                <div class="panel-bottom bg-light">
+                    <span style="font-size: 31px">{{offer.stats.impressions}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-xsm-4">
+            <div class="panel panel-box">
+                <div class="panel-top">
+                    <i class="zmdi zmdi-thumb-up color-info"></i>
+                </div>
+                <div class="panel-info">
+                    <span>CONVERSIONS</span>
+                </div>
+                <div class="panel-bottom bg-light">
+                    <span style="font-size: 31px">{{offer.stats.conversions}}</span>
+                </div>
+            </div>
+        </div>
+
+       
+          
+    </div>
+    
+
+
+    <div class="row" ng-if="showChartData">
+
+         <div class="col-lg-4 col-md-4 col-xsm-4">
+            <div class="panel panel-box">
+                <div class="panel-top">
+                    <i class="zmdi zmdi-money-off color-danger"></i>
+                </div>
+                <div class="panel-info">
+                    <span>CPC</span>
+                </div>
+                <div class="panel-bottom bg-light">
+                    <span style="font-size: 31px">R$ {{offer.stats.cpc | number:2}}</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4 col-md-4 col-xsm-4">
+            <div class="panel panel-box">
+                <div class="panel-top">
+                    <i class="zmdi zmdi-shield-check color-warning"></i>
+                </div>
+                <div class="panel-info">
+                    <span>E-CPM</span>
+                </div>
+                <div class="panel-bottom bg-light">
+                    <span style="font-size: 31px">R$ {{offer.stats.ecpm | number:2}} </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4 col-md-4 col-xsm-4">
+            <div class="panel panel-box">
+                <div class="panel-top">
+                    <i class="zmdi zmdi-money-box color-success"></i>
+                </div>
+                <div class="panel-info">
+                    <span>REVENUE</span>
+                </div>
+                <div class="panel-bottom bg-light">
+                    <span style="font-size: 31px">R$ {{offer.stats.revenue | number:2}} </span>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+    <div class="row" ng-if="showChartData">
+
+    
+
+        <div class="col-lg-4 col-md-4 col-xsm-4">
+            <div class="panel panel-default panel-labeled"> 
+
+                        <div class="panel-body text-center">
+                            <h3 style="margin: 0 0 20px;">Offer Type</h3>
+
+                            <div class="row" ng-if="!showOfferTypeChart">
+                                <div class="col-lg-12 col-xsm-12">
+                                    <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+                                </div>
+                            </div>
+
+                            <div ng-if="showOfferTypeChart" data-flot-chart
+                                data-data="offerTypeChart.data"
+                                data-options="offerTypeChart.options"
+                                style="width: 100%; height: 200px;"
+                                ></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-4 col-md-4 col-xsm-4">
+                    <div class="panel panel-default panel-labeled">                     
+                        <div class="panel-body text-center">
+                            <h3>Refusal</h3>
+                            <div easypiechart options="refusalPieChart.options" percent="refusalPieChart.percent" class="easypiechart">
+                                <span class="pie-percent" ng-bind="refusalPieChart.percent"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+        <div class="col-lg-4 col-md-4 col-xsm-4">
+                    <div class="panel panel-default panel-labeled">
+                        <div class="panel-body text-center">
+                            <h3>Acceptance</h3>
+                            <div easypiechart options="acceptancePieChart.options" percent="acceptancePieChart.percent" class="easypiechart">
+                                <span class="pie-percent" ng-bind="acceptancePieChart.percent"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+
+
+    </div>
+
+
+
+    <!--<div class="row" ng-if="showChartData">
+
+                <div class="col-sm-3">
+                    <div class="panel panel-default panel-labeled">                     
+                        <div class="panel-body text-center">
+                            <h3 style="margin: 0 0 0px;">Offer Type</h3>
+                            <div ng-if="showOfferTypeChart" data-flot-chart
+                                data-data="offerTypeChart.data"
+                                data-options="offerTypeChart.options"
+                                style="width: 100%; height: 300px;"
+                                ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="panel panel-default panel-labeled">                     
+                        <div class="panel-body text-center">
+                            <h3 style="margin: 0 0 0px;">Acceptance / Refusal</h3>
+                            <div ng-if="showOfferTypeChart" data-flot-chart
+                                data-data="offerAcceptanceRefusalChart.data"
+                                data-options="offerAcceptanceRefusalChart.options"
+                                style="width: 100%; height: 300px;"
+                                ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="panel panel-default panel-labeled">                     
+                        <div class="panel-body text-center">
+                            <h3 style="margin: 0 0 0px;">Traffic Source</h3>
+                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Source</th>
+                                                        <th>Count</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in offerStatsTrafficSource">
+                                                        <td style="text-align: left;">{{item.origin}}</td>
+                                                        <td style="text-align: left;">{{item.count}}</td>
+                                                    </tr>                                                    
+                                                </tbody>
+                                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+    </div>-->
+
+    <div class="row" ng-if="showChartData">
+
+                
+    </div>
+
+
+
+    <div class="row" ng-if="showChartData">
+
+        <div class="col-md-12">
+            <div class="ui-tab-container ui-tab-horizontal">
+                <uib-tabset justified="false" class="ui-tab">
+                    
+                    <uib-tab heading="Report Data">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default panel-minimal">
+                                        <div class="panel-body">
+
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Clicks</th>
+                                                        <th>Impressions</th>
+                                                        <th>Conversion</th>
+                                                        <th>CPC</th>
+                                                        <th>Revenue</th>
+                                                        <th>Profit</th>
+                                                        <th>eCPM</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in offer.stats.dateFilter">
+                                                        <td>{{item.date}}</td>
+                                                        <td>{{item.clicks}}</td>
+                                                        <td>{{item.impressions}}</td>
+                                                        <td>{{item.conversions}}</td>
+                                                        <td>{{ item.cpc | number:2}}</td>
+                                                        <td>{{item.revenue | number:2}}</td>
+                                                        <td>{{item.profit | number:2}}</td>
+                                                        <td>{{item.ecpm | number:2 }}</td>                                                       
+                                                    </tr>                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>                            
+                                </div>
+                            </div>
+                    </uib-tab>
+
+                    <uib-tab heading="Graphics">
+                            <div class="row" ng-if="(showChartData) && (dateFilterType != 'today')">
+                                <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div data-flot-chart
+                                                    data-data="clicksCharts.data"
+                                                    data-options="clicksCharts.options"
+                                                    style="width: 100%; height: 350px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+
+                            <div class="row" ng-if="(showChartData) && (dateFilterType != 'today')">
+                                <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div data-flot-chart
+                                                    data-data="conversionsChart.data"
+                                                    data-options="conversionsChart.options"
+                                                    style="width: 100%; height: 350px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            
+                            <div class="row" ng-if="(showChartData) && (dateFilterType != 'today')">
+                                <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div data-flot-chart
+                                                    data-data="cpcChart.data"
+                                                    data-options="cpcChart.options"
+                                                    style="width: 100%; height: 350px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+
+                            <div class="row" ng-if="(showChartData) && (dateFilterType != 'today')">
+                                <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div data-flot-chart
+                                                    data-data="revenueChart.data"
+                                                    data-options="revenueChart.options"
+                                                    style="width: 100%; height: 350px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </uib-tab>
+
+
+                    
+                </uib-tabset>
+            </div> 
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+</div>

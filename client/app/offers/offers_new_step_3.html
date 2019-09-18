@@ -1,0 +1,942 @@
+    <div style="width: 100%;" id="steps-uid-0-p-0"  >
+
+
+        <div class="panel panel-default" style="margin-top: 20px;" 
+            ng-repeat="itemData in offer.affiliationData track by $index" >
+            
+            <div class="panel-heading">
+                <h3 class="panel-title">{{getAffiliationName(itemData.affiliation)}}</h3>
+            </div>
+            
+            <div class="panel-body" style="padding: 40px;">
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div layout="column" ng-cloak class="md-inline-form">
+                            <md-content layout-padding layout-margin layout-fill>
+
+                                <div style="background-color: #f2f7f7; margin-bottom: 30px;" 
+                                    ng-repeat="itemDelivery in itemData.delivery track by $index">
+
+                                    <!--<input ng-hide="true" ng-model="itemData.affiliation" 
+                                        ng-init="offer.delivery.survey.affiliationURL[$index].affiliation = itemAff._id">-->
+                                    
+                                    <div layout layout-sm="column" style="margin-bottom:40px;">
+                                        <h3 class="panel-title">{{itemDelivery.offerType | uppercase}}  </h3>
+                                    </div>
+
+                                    <div layout layout-sm="column">
+
+                                        <md-input-container flex="30" style="margin: 0px;">
+                                            <label>Delivery Type  </label>
+                                            <md-select required id="surveyType" name="surveyType"
+                                                ng-model="itemDelivery.urlType">
+                                                
+                                                <md-option value="ws">Webservice</md-option>
+                                                <md-option selected value="tb">Target Blank Link</md-option>
+                                            </md-select>
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a Target Blank Link
+                                                    value.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container flex="55" style="margin: 0px;"
+                                            ng-show="itemDelivery.urlType === 'ws'">
+
+                                            <label>WS URL  </label>
+                                            <input disabled required id="wsUrlSurvey" name="wsUrlSurvey"
+                                                ng-model="itemDelivery.url">
+                                        </md-input-container>
+
+                                        <md-input-container flex="15" style="margin: 0px;"
+                                            ng-show="itemDelivery.urlType === 'ws'">
+                                            <md-button class="md-button btn-md" 
+                                                ng-click="openModal('buildDeliveryURL', $parent.$index, $index)">
+                                                Build URL
+                                            </md-button>
+                                        </md-input-container>
+
+
+                                        <md-input-container flex="70" style="margin: 0px;"
+                                            ng-show="itemDelivery.urlType === 'tb'">
+                                            <label>Target Blank Link  </label>
+                                            <input required id="targetBlankUrlSurvey" name="targetBlankUrlSurvey"
+                                                ng-model="itemDelivery.url">
+                                            
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a code.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+
+                                    <div layout layout-sm="column">
+
+                                        <md-input-container flex="30" >
+                                            <label>Image Type  </label>
+                                            <md-select required id="imageType" name="imageType"
+                                                       ng-model="itemDelivery.isUploadImage">
+                                                <md-option ng-value="true">Upload Image</md-option>
+                                                <md-option ng-value="false">URL Link</md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+
+                                        <div flex="70" ng-show="itemDelivery.isUploadImage" layout>
+                                            <input style="margin-top: 31px;" type="file" ngf-select="uploadFile($file, itemDelivery)" 
+                                                ng-model="itemDelivery.image" name="file"    
+                                                accept="image/*" ngf-max-size="2MB" required
+                                                ngf-model-invalid="errorFile">
+                                        </div>
+
+                                        <div flex="70" ng-show="!itemDelivery.isUploadImage" layout >
+                                            <md-input-container flex>
+                                                <label>Image URL</label>
+                                                <input required id="image" name="image"
+                                                    ng-model="itemDelivery.image">
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+
+                
+
+                                    <!-- PREVIEW  ng-show="!itemDelivery.isUploadImage"-->
+                                    <div layout layout-sm="column" style="margin-top: 0px;">
+                                        <img style="zoom: 50%;" ng-src="{{itemDelivery.image}}" />
+                                    </div>
+
+                                </div>
+                            </md-content>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <!-- Sponsoring 
+
+        <div class="panel panel-default" style="margin-top: 20px;" ng-show="offer.isSponsoring">
+            <div class="panel-heading">
+                <h3 class="panel-title">Sponsoring</h3>
+            </div>
+            <div class="panel-body" style="padding: 40px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div layout="column" ng-cloak class="md-inline-form">
+
+                            <md-content layout-padding layout-margin layout-fill>
+                            
+
+                                <div ng-repeat="item in offer.delivery.sponsoring.affiliationURL track by $index" style="background-color: #f2f7f7;">
+
+                                    
+                                    <div layout layout-sm="column" style="margin-bottom:20px;">
+                                        <label style="color: rgba(0,0,0,0.54);">{{item.affiliation.name}}  </label>
+                                    </div>
+
+                                    <div layout layout-sm="column">
+
+                                        <md-input-container flex="100" style="margin: 0px;">
+
+                                            <label>WS URL  </label>
+                                            <input disabled required id="wsUrlSurvey" name="wsUrlSurvey"
+                                                ng-model="item.url">
+                                        </md-input-container>
+
+                                        <md-input-container flex="15" style="margin: 0px;">
+                                            <md-button class="md-button btn-md" ng-click="openModal('buildDeliveryURL', 'sponsor', $index)">
+                                                Build URL
+                                            </md-button>
+                                        </md-input-container>
+
+                                    </div>
+                                </div>
+
+
+
+
+           
+                                
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="30" >
+                                        <label>Image Type  </label>
+                                        <md-select required id="imageType" name="imageType"
+                                                   ng-model="offer.delivery.sponsoring.isUploadImage">
+                                            <md-option ng-value="true">Upload Image</md-option>
+                                            <md-option ng-value="false">URL Link</md-option>
+                                        </md-select>
+                                    </md-input-container>
+
+
+                                    <div flex="70" ng-show="offer.delivery.sponsoring.isUploadImage" layout>
+                                        <input style="margin-top: 31px;" type="file" ngf-select="uploadFile($file, 'sponsoring')" ng-model="offer.delivery.sponsoring.largeImage" name="file"    
+                                            accept="image/*" ngf-max-size="2MB" required
+                                            ngf-model-invalid="errorFile">
+                                    </div>
+
+                                    <div flex="70" ng-show="!offer.delivery.sponsoring.isUploadImage" layout >
+                                        <md-input-container flex>
+                                            <label>Image URL</label>
+                                            <input required id="imageSurvey" name="imageSurvey"
+                                                ng-model="offer.delivery.sponsoring.largeImage">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+        
+
+                                
+                                <div layout layout-sm="column">
+                                    <label style="color: rgba(0,0,0,0.54);">Preview  </label></br>
+                                </div>
+
+                                <div layout layout-sm="column" style="margin-top: 0px;">
+                                    <img style="zoom: 50%;" ng-src="{{offer.delivery.sponsoring.largeImage}}" />
+                                </div>
+
+                            
+                            </md-content>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+        
+
+        <div class="panel panel-default" style="margin-top: 20px;" ng-show="offer.isSurvey">
+            <div class="panel-heading">
+                <h3 class="panel-title">Survey</h3>
+            </div>
+            <div class="panel-body" style="padding: 40px;">
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div layout="column" ng-cloak class="md-inline-form">
+                            <md-content layout-padding layout-margin layout-fill>
+
+                                <div ng-repeat="itemAff in offer.affiliationData track by $index" style="background-color: #f2f7f7;">
+
+                                    <input ng-hide="true" ng-model="offer.delivery.survey.affiliationURL[$index].affiliation" 
+                                        ng-init="offer.delivery.survey.affiliationURL[$index].affiliation = itemAff._id">
+                                    
+                                    <div layout layout-sm="column" style="margin-bottom:20px;">
+                                        <label style="color: rgba(0,0,0,0.54);">{{itemAff.name}}  </label>
+                                    </div>
+
+                                    <div layout layout-sm="column">
+
+                                        <md-input-container flex="30" style="margin: 0px;">
+                                            <label>Delivery Type  </label>
+                                            <md-select required id="surveyType" name="surveyType"
+                                                ng-model="itemAff.type">
+                                                
+                                                <md-option value="ws">Webservice</md-option>
+                                                <md-option value="tb">Target Blank Link</md-option>
+                                            </md-select>
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a Affiliation
+                                                    name.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container flex="55" style="margin: 0px;"
+                                            ng-show="itemAff.type === 'ws'">
+
+                                            <label>WS URL  </label>
+                                            <input disabled required id="wsUrlSurvey" name="wsUrlSurvey"
+                                                ng-model="itemAff.url">
+                                        </md-input-container>
+
+                                        <md-input-container flex="15" style="margin: 0px;"
+                                            ng-show="itemAff.type === 'ws'">
+                                            <md-button class="md-button btn-md" ng-click="openModal('buildDeliveryURL', 'survey', $index)">
+                                                Build URL
+                                            </md-button>
+                                        </md-input-container>
+
+
+                                        <md-input-container flex="70" style="margin: 0px;"
+                                            ng-show="itemAff.type === 'tb'">
+                                            <label>Target Blank Link  </label>
+                                            <input required id="targetBlankUrlSurvey" name="targetBlankUrlSurvey"
+                                                ng-model="itemAff.url">
+                                            
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a code.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+                                </div>
+
+
+
+
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="30" >
+                                        <label>Image Type  </label>
+                                        <md-select required id="imageType" name="imageType"
+                                                   ng-model="offer.delivery.survey.isUploadImage">
+                                            <md-option ng-value="true">Upload Image</md-option>
+                                            <md-option ng-value="false">URL Link</md-option>
+                                        </md-select>
+                                    </md-input-container>
+
+
+                                    <div flex="70" ng-show="offer.delivery.survey.isUploadImage" layout>
+                                        <input style="margin-top: 31px;" type="file" ngf-select="uploadFile($file, 'survey')" ng-model="offer.delivery.survey.smallImage" name="file"    
+                                            accept="image/*" ngf-max-size="2MB" required
+                                            ngf-model-invalid="errorFile">
+                                    </div>
+
+                                    <div flex="70" ng-show="!offer.delivery.survey.isUploadImage" layout >
+                                        <md-input-container flex>
+                                            <label>Image URL</label>
+                                            <input required id="imageSurvey" name="imageSurvey"
+                                                ng-model="offer.delivery.survey.smallImage">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+            
+
+                                <div layout layout-sm="column">
+                                    <label style="color: rgba(0,0,0,0.54);">Preview  </label><br>
+                                </div>
+
+                                <div layout layout-sm="column" style="margin-top: 0px;">
+                                    <img style="zoom: 50%;" ng-src="{{offer.delivery.survey.smallImage}}" />
+                                </div>
+
+
+                            </md-content>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Question Hall 
+
+        <div class="panel panel-default" style="margin-top: 20px;" ng-show="offer.isQuestionHall">
+            <div class="panel-heading">
+                <h3 class="panel-title">Question Hall</h3>
+            </div>
+            <div class="panel-body" style="padding: 20px 40px 20px 40px;">
+
+
+                    <div layout="row">
+
+
+                            <md-content layout-padding layout-margin layout-fill>
+                                
+
+                                <md-input-container flex=100 style="margin: 0px;">
+                                    <label>&nbsp;</label>
+                                    <md-checkbox ng-model="offer.delivery.questionHall.isShowAnswerList" class="md-primary" aria-label="Sponsoring" style="color: rgba(0,0,0,0.26); margin-top: 0px;"> <b>Show Anserws List</b> &nbsp;&nbsp;&nbsp;&nbsp;</md-checkbox>
+                                </md-input-container>
+
+
+                                
+                                <div ng-repeat="itemAff in offer.affiliation track by $index" style="background-color: #f2f7f7;">
+
+                                    <input ng-hide="true" ng-model="offer.delivery.questionHall.affiliationURL[$index].affiliation" 
+                                        ng-init="offer.delivery.questionHall.affiliationURL[$index].affiliation = itemAff._id">
+                                    
+                                    <div layout layout-sm="column" style="margin-bottom:20px;">
+                                        <label style="color: rgba(0,0,0,0.54);">{{itemAff.name}}  </label>
+                                    </div>
+
+                                    <div layout layout-sm="column">
+
+
+                                        <md-input-container flex="30" style="margin: 0px;">
+                                            <label>Delivery Type  </label>
+                                            <md-select required id="surveyType" name="surveyType"
+                                                ng-model="offer.delivery.questionHall.affiliationURL[$index].type">
+                                                
+                                                <md-option value="ws">Webservice</md-option>
+                                                <md-option value="tb">Target Blank Link</md-option>
+                                            </md-select>
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a Affiliation
+                                                    name.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container flex="55" style="margin: 0px;"
+                                            ng-show="offer.delivery.questionHall.affiliationURL[$index].type === 'ws'">
+
+                                            <label>WS URL  </label>
+                                            <input disabled required id="wsUrlSurvey" name="wsUrlSurvey"
+                                                ng-model="offer.delivery.questionHall.affiliationURL[$index].url">
+                                        </md-input-container>
+
+
+                                        <md-input-container flex="15" style="margin: 0px;"
+                                            ng-show="offer.delivery.questionHall.affiliationURL[$index].type === 'ws'">
+                                            <md-button class="md-button btn-md" ng-click="openModal('buildDeliveryURL', 'questionHall', $index)">
+                                                Build URL
+                                            </md-button>
+                                        </md-input-container>
+
+
+                                        <md-input-container flex="70" style="margin: 0px;"
+                                            ng-show="offer.delivery.questionHall.affiliationURL[$index].type === 'tb'">
+                                            <label>Target Blank Link  </label>
+                                            <input required id="targetBlankUrlSurvey" name="targetBlankUrlSurvey"
+                                                ng-model="offer.delivery.questionHall.affiliationURL[$index].url">
+                                            
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a code.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+                                </div>
+
+
+
+                                
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="30" >
+                                        <label>Image Type  </label>
+                                        <md-select required id="imageType" name="imageType"
+                                                   ng-model="offer.delivery.questionHall.isUploadImage">
+                                            <md-option ng-value="true">Upload Image</md-option>
+                                            <md-option ng-value="false">URL Link</md-option>
+                                        </md-select>
+                                    </md-input-container>
+
+
+                                    <div flex="70" ng-show="offer.delivery.questionHall.isUploadImage" layout>
+                                        <input style="margin-top: 31px;" type="file" ngf-select="uploadFile($file, 'questionHall')" ng-model="offer.delivery.questionHall.largeImage" name="file"    
+                                            accept="image/*" ngf-max-size="2MB" required
+                                            ngf-model-invalid="errorFile">
+                                    </div>
+
+                                    <div flex="70" ng-show="!offer.delivery.questionHall.isUploadImage" layout >
+                                        <md-input-container flex>
+                                            <label>Image URL</label>
+                                            <input required id="imageSurvey" name="imageSurvey"
+                                                ng-model="offer.delivery.questionHall.largeImage">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+            
+
+                                
+                                <div layout layout-sm="column">
+                                    <label style="color: rgba(0,0,0,0.54);">Preview  </label></br>
+                                </div>
+
+                                <div layout layout-sm="column" style="margin-top: 0px;">
+                                    <img style="zoom: 50%;" ng-src="{{offer.delivery.questionHall.largeImage}}" />
+                                </div>
+
+
+                            </md-content>
+
+                        
+
+                    </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Balcony
+
+        <div class="panel panel-default" style="margin-top: 20px;" ng-show="offer.isBalcony">
+            <div class="panel-heading">
+                <h3 class="panel-title">Balcony</h3>
+            </div>
+            <div class="panel-body" style="padding: 20px 40px 20px 40px;">
+
+                <div layout="column" ng-cloak class="md-inline-form">
+                    <md-content layout-padding layout-margin layout-fill>
+
+
+                                
+                                <div ng-repeat="itemAff in offer.affiliation track by $index" style="background-color: #f2f7f7;">
+
+                                    <input ng-hide="true" ng-model="offer.delivery.balcony.affiliationURL[$index].affiliation" 
+                                        ng-init="offer.delivery.balcony.affiliationURL[$index].affiliation = itemAff._id">
+                                    
+                                    <div layout layout-sm="column" style="margin-bottom:20px;">
+                                        <label style="color: rgba(0,0,0,0.54);">{{itemAff.name}}  </label>
+                                    </div>
+
+                                    <div layout layout-sm="column">
+
+
+                                        <md-input-container flex="30" style="margin: 0px;">
+                                            <label>Delivery Type  </label>
+                                            <md-select required id="surveyType" name="surveyType"
+                                                ng-model="offer.delivery.balcony.affiliationURL[$index].type">
+                                                
+                                                <md-option value="tb">Target Blank Link</md-option>
+                                            </md-select>
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a Affiliation
+                                                    name.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container flex="55" style="margin: 0px;"
+                                            ng-show="offer.delivery.balcony.affiliationURL[$index].type === 'ws'">
+
+                                            <label>WS URL  </label>
+                                            <input disabled required id="wsUrlSurvey" name="wsUrlSurvey"
+                                                ng-model="offer.delivery.balcony.affiliationURL[$index].url">
+                                        </md-input-container>
+
+
+                                        <md-input-container flex="15" style="margin: 0px;"
+                                            ng-show="offer.delivery.balcony.affiliationURL[$index].type === 'ws'">
+                                            <md-button class="md-button btn-md" ng-click="openModal('buildDeliveryURL', 'balcony', $index)">
+                                                Build URL
+                                            </md-button>
+                                        </md-input-container>
+
+
+                                        <md-input-container flex="70" style="margin: 0px;"
+                                            ng-show="offer.delivery.balcony.affiliationURL[$index].type === 'tb'">
+                                            <label>Target Blank Link  </label>
+                                            <input required id="targetBlankUrlSurvey" name="targetBlankUrlSurvey"
+                                                ng-model="offer.delivery.balcony.affiliationURL[$index].url">
+                                            
+                                            <div ng-messages="" role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a code.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+                                </div>
+
+
+
+                                
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="30" >
+                                        <label>Image Type  </label>
+                                        <md-select required id="imageType" name="imageType"
+                                                   ng-model="offer.delivery.balcony.isUploadImage">
+                                            <md-option ng-value="true">Upload Image</md-option>
+                                            <md-option ng-value="false">URL Link</md-option>
+                                        </md-select>
+                                    </md-input-container>
+
+
+                                    <div flex="70" ng-show="offer.delivery.balcony.isUploadImage" layout>
+                                        <input style="margin-top: 31px;" type="file" ngf-select="uploadFile($file, 'balcony')" ng-model="offer.delivery.balcony.largeImage" name="file"    
+                                            accept="image/*" ngf-max-size="2MB" required
+                                            ngf-model-invalid="errorFile">
+                                    </div>
+
+                                    <div flex="70" ng-show="!offer.delivery.balcony.isUploadImage" layout >
+                                        <md-input-container flex>
+                                            <label>Image URL</label>
+                                            <input required id="imageSurvey" name="imageSurvey"
+                                                ng-model="offer.delivery.balcony.largeImage">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+            
+
+                                
+                                <div layout layout-sm="column">
+                                    <label style="color: rgba(0,0,0,0.54);">Preview  </label></br>
+                                </div>
+
+                                <div layout layout-sm="column" style="margin-top: 0px;">
+                                    <img style="zoom: 50%;" ng-src="{{offer.delivery.balcony.largeImage}}" />
+                                </div>
+
+                    </md-content>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+        <!-- MODAL BUILD URL -->
+
+        <script type="text/ng-template" id="modalBuildURLContent.html">
+            <div class="modal-header">
+                <h3>Build URL from WS Offer</h3>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div layout="column" ng-cloak class="md-inline-form">
+                            <md-content layout-padding layout-margin layout-fill>
+
+
+                                <div layout layout-sm="column" style="height: 50px;">
+
+                                    <md-input-container flex>
+                                        <label>Main URL Parameter </label>
+                                        <input required name="mainUrl" ng-model="urlBuild.mainUrl">
+                                        <div ng-messages="" role="alert" multiple>
+                                            <div ng-message="required" class="my-message">You must supply a code.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+
+
+
+
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex>
+                                        <label>Custom User Data</label>
+                                    </md-input-container>
+                                </div>
+
+                                <div ng-repeat="customData in urlBuild.customUserData" layout layout-sm="column">
+
+                                    <md-input-container flex="30" style="padding: 0px; margin: 0px;">
+                                        <label>Custom Parameter</label>
+                                        <input disabled value="{{customData.fieldTag}}">
+                                    </md-input-container>
+
+                                    <md-input-container flex="70" style="padding: 0px; margin: 0px;">
+                                        <label>Field</label>
+                                        <input disabled value="{{customData.field}}">
+                                    </md-input-container>
+                                
+                                </div>
+
+
+
+
+
+
+
+
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex>
+                                        <label>User Data</label>
+                                    </md-input-container>
+                                </div>
+
+                                <!-- Email -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.email.status" class="md-primary" aria-label="Email"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Email</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Email Parameter </label>
+                                        <input required name="email" ng-model="urlBuild.fields.email.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+                                <!-- Full Name -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.fullName.status" class="md-primary" aria-label="Full Name"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Name</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Full Name Field Parameter </label>
+                                        <input required name="fullName" ng-model="urlBuild.fields.fullName.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+                                <!-- First Name -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.firstName.status" class="md-primary" aria-label="First Name"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>First Name</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>First Name Parameter </label>
+                                        <input required name="firstName" ng-model="urlBuild.fields.firstName.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+
+
+                                <!-- Last Name -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.lastName.status" class="md-primary" aria-label="Last Name"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Last Name</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Last Name Parameter </label>
+                                        <input required name="firstName" ng-model="urlBuild.fields.lastName.value">
+                                    </md-input-container>
+                                </div>
+
+
+                                <!-- Birth Date -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.birthDate.status" class="md-primary" aria-label="Birth Date"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Birth Date</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="25" style="padding: 0px; margin: 0px; padding-right: 10px;">
+                                        <label>Birth Date Mask </label>
+                                        <input required name="Birth Date" ng-model="mask">
+                                    </md-input-container>
+
+                                    <md-input-container flex="60" style="padding: 0px; margin: 0px;">
+                                        <label>Birth Date Parameter </label>
+                                        <input required name="Birth Date" ng-model="urlBuild.fields.birthDate.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+
+                                <!-- Gender -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.gender.status" class="md-primary" aria-label="Gender"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Gender</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="30" style="padding: 0px; margin: 0px; padding-right: 10px; ">
+                                        <label>Gender Parameter </label>
+                                        <input required name="Gender" ng-model="urlBuild.fields.gender.value">
+                                    </md-input-container>
+
+                                    <md-input-container flex="30" style="padding: 0px; margin: 0px;padding-right: 10px; ">
+                                        <label>Value for <b>MALE</b> </label>
+                                        <input required name="Gender" ng-model="valueMale">
+                                    </md-input-container>
+
+                                    <md-input-container flex="30" style="padding: 0px; margin: 0px;">
+                                        <label>Value for <b>FEMALE</b> </label>
+                                        <input required name="Gender" ng-model="valueFemale">
+                                    </md-input-container>
+                                </div>
+
+
+
+                                <!-- Cellphone -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.cellphone.status" class="md-primary" aria-label="Cellphone"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Cellphone</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Cellphone Parameter </label>
+                                        <input required name="Gender" ng-model="urlBuild.fields.cellphone.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+
+                                <!-- Telephone -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.telephone.status" class="md-primary" aria-label="Telephone"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Telephone</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Telephone Parameter </label>
+                                        <input required name="Telephone" ng-model="urlBuild.fields.telephone.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+
+
+
+
+
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex>
+                                        <label>Address</label>
+                                    </md-input-container>
+                                </div>
+
+                                <!-- State -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.state.status" class="md-primary" aria-label="State"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>State</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>State Parameter </label>
+                                        <input required name="State" ng-model="urlBuild.fields.state.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+                                <!-- City -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.city.status" class="md-primary" aria-label="City"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>City</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>City Parameter </label>
+                                        <input required name="City" ng-model="urlBuild.fields.city.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+                                <!-- Zipcode -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.zipcode.status" class="md-primary" aria-label="Zipcode"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Zipcode</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Zipcode Parameter </label>
+                                        <input required name="City" ng-model="urlBuild.fields.zipcode.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex>
+                                        <label>Tecnical Information</label>
+                                    </md-input-container>
+                                </div>
+
+
+
+                                <!-- Ip -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.ip.status" class="md-primary" aria-label="Ip"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Ip</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Ip Parameter </label>
+                                        <input required name="Ip" ng-model="urlBuild.fields.ip.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+                                <!-- Current Date -->
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex="15" style="padding: 0px; margin: -11px 0px 0px 0px;">
+                                        <md-checkbox ng-model="urlBuild.fields.currentDate.status" class="md-primary" aria-label="Current Date"
+                                                     style="color: rgba(0,0,0,0.26);"> <b>Date</b>
+                                        </md-checkbox>
+                                    </md-input-container>
+
+                                    <md-input-container flex="85" style="padding: 0px; margin: 0px;">
+                                        <label>Current Date Parameter </label>
+                                        <input required name="Ip" ng-model="urlBuild.fields.currentDate.value">
+                                    </md-input-container>
+                                </div>
+
+
+
+                            </md-content>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ui-wave class="btn btn-flat btn-primary" ng-click="ok()">OK</button>
+            </div>
+        </script>
+
+
+    </div>

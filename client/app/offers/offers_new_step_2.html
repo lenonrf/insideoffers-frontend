@@ -1,0 +1,153 @@
+    <div style="width: 100%;" id="steps-uid-0-p-0"  >
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Fixed Segmentation</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div layout="column" ng-cloak class="md-inline-form">
+                            <md-content layout-padding layout-margin layout-fill>
+
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex>
+                                        <label style="margin-bottom: 15px;">Gender</label>
+
+                                        <md-checkbox ng-model="offer.segmentation.isMale" class="md-primary" aria-label="Mobile"> Male </md-checkbox>&nbsp;&nbsp;
+                                        <md-checkbox ng-model="offer.segmentation.isFemale" class="md-primary" aria-label="Desktop"> Female </md-checkbox>
+
+                                    </md-input-container>
+
+                                    <md-input-container flex>
+                                        <label style="margin-bottom: 15px;">Devices</label>
+
+                                        <md-checkbox ng-model="offer.segmentation.isMobile" class="md-primary" aria-label="Mobile"> Mobile </md-checkbox>&nbsp;&nbsp;
+                                        <md-checkbox ng-model="offer.segmentation.isDesktop" class="md-primary" aria-label="Desktop"> Desktop </md-checkbox>
+
+                                    </md-input-container>
+                                </div>
+
+                                <div layout layout-sm="column">
+
+                                    <md-input-container flex>
+                                        <label style="margin-bottom: 15px;">Age More Than {{offer.segmentation.age.moreThan}}</label>
+                                        <md-slider flex ng-model="offer.segmentation.age.moreThan" min="0" max="90" aria-label="blue" class="md-primary"></md-slider>
+                                    </md-input-container>
+
+                                    <md-input-container flex>
+                                        <label style="margin-bottom: 15px;">Age Less Than {{offer.segmentation.age.lessThan}}</label>
+                                        <md-slider flex ng-model="offer.segmentation.age.lessThan" min="0" max="90" aria-label="blue" class="md-primary"></md-slider>
+                                    </md-input-container>
+                                </div>
+
+
+                                <div layout layout-sm="column">
+
+                                    <div class="col-md-12" style="padding-left: 0px;">
+                                        <md-chips style="font-size: 13px; padding: 0 0 5px 5px;"
+                                                  ng-model="offer.segmentation.dddRegion"
+                                                  placeholder="Add DDD Number"
+                                                  secondary-placeholder="Add DDD Region"></md-chips>
+                                    </div>
+
+                                </div>
+
+
+                                <div layout layout-sm="column">
+
+                                    <div class="col-md-12" style="padding-left: 0px;">
+                                        <md-chips style="font-size: 13px; padding: 0 0 5px 5px;"
+                                                  ng-model="offer.segmentation.forbiddenDomains"
+                                                  placeholder="Add a Email Domain"
+                                                  secondary-placeholder="Add Forbidden Domain"></md-chips>
+                                    </div>
+
+                                </div>
+
+
+                            </md-content>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Questions Dynamic Segmentation -->
+
+        <div class="panel panel-default" style="margin-top: 20px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Dynamic Question Segmentation</h3>
+            </div>
+            <div class="panel-body" style="padding: 20px 40px 20px 40px;">
+
+                <div class="text-center" style="padding-bottom: 15px;">
+                  <md-button class="md-button btn-md" ng-click="openModal('dynamicQuestion')">
+                      {{dynamicSegmentation.length === 0 ? 'Add new question' : 'Edit questions'}}
+                  </md-button>
+                </div>
+
+                <table class="table table-bordered table-striped table-responsive"
+                       ng-show="dynamicSegmentation.length !== 0">
+                    <thead>
+                        <tr>
+                            <th><div class="th">
+                                {{dynamicSegmentation.length === 1 ? 'Question'
+                                    : 'Questions ('+dynamicSegmentation.length+')'}} </div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="question in dynamicSegmentation">
+                            <td>{{question.title}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h3>Select the Question</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th width="10%"><div class="th">Selected </div></th>
+                            <th><div class="th">Question </div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="question in itemsModal">
+                            <td width="10%" class="text-center">
+                                <md-checkbox aria-label="Is Selected?" ng-change="selectQuestion(question)"
+                                             md-no-ink ng-model="question.isSelected" class="md-primary"></md-checkbox>
+
+
+                            </td>
+                            <td>{{question.title}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button ui-wave class="btn btn-flat btn-default" ng-click="cancel()">Cancel</button>
+                <button ui-wave class="btn btn-flat btn-primary" ng-click="ok()">OK</button>
+            </div>
+        </script>
+
+
+
+
+    </div>

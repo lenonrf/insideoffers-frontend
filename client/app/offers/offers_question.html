@@ -1,0 +1,193 @@
+<div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div layout="column" ng-cloak class="md-inline-form">
+                <md-content>
+
+                    <div layout layout-sm="column" style="padding-top: 10px;">
+                        <md-input-container flex style="margin: 0px;">
+                            <label>Main Question</label>
+                            <input required id="mainQuestionTitle" name="mainQuestionTitle"
+                                   ng-model="offer.mainQuestion.title">
+                            <div ng-messages="ctrl.form.mainQuestionTitle.$error" role="alert" multiple>
+                                <div ng-message="required" class="my-message">You must supply a main question title.
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                    </div>
+                </md-content>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div layout="column" ng-cloak class="md-inline-form">
+                <md-content>
+
+                    <div layout layout-sm="column" style="padding-top: 10px;">
+                        <md-input-container flex style="margin: 0px;">
+                            <label>Description</label>
+                            <input required id="mainQuestionDescription" name="mainQuestionDescription"
+                                   ng-model="offer.mainQuestion.description">
+                            <div ng-messages="ctrl.form.mainQuestionDescription.$error" role="alert" multiple>
+                                <div ng-message="required" class="my-message">You must supply a question description.
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                    </div>
+                </md-content>
+            </div>
+        </div>
+    </div>
+
+
+    <div ui-tree="options">
+        <ol ui-tree-nodes ng-model="list">
+            <li ng-repeat="item in offer.mainQuestion.answerList track by $index">
+
+                <div class="angular-ui-tree-handle" data-nodrag style="cursor: default;">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div layout="column" ng-cloak class="md-inline-form">
+                                <md-content>
+
+                                    <div layout layout-sm="column" style="padding-top: 10px;  padding-bottom: 7px;">
+                                        <md-input-container flex="100" style="margin: 0px;">
+                                            <label>Answer {{($index)+1}}</label>
+                                            <input required id="mainQuestionAnswer_{{$index}}" name="mainQuestionAnswer_{{$index}}"
+                                                   ng-model="offer.mainQuestion.answerList[$index].answer">
+                                            <div ng-messages="form['mainQuestionAnswer_'+$index].$error" role="alert"
+                                                 multiple>
+                                                <div ng-message="required" class="my-message">You must supply a
+                                                    answer.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container data-nodrag flex="50" style="margin: 0px;">
+                                            <label>Actions</label>
+                                            <md-select required id="mainQuestionAction_{{$index}}" name="mainQuestionAction_{{$index}}"
+                                                       ng-change="choiseAction(offer.mainQuestion.answerList[$index].action.type, $index)"
+                                                       ng-model="offer.mainQuestion.answerList[$index].action.type">
+
+                                                <md-option value="delivery">Delivery lead</md-option>
+                                                <md-option value="do_nothing">Do nothing</md-option>
+                                                <md-option value="confirm_user_fields">Confirm user fields</md-option>
+                                                <md-option value="open_new_input_field">Open new input field</md-option>
+                                                <!--<md-option value="new_question"
+                                                           ng-click="addSubQuestion('subQuestionSpace_'+subQuestionId, item)">
+                                                    New question
+                                                </md-option>-->
+
+                                            </md-select>
+                                            <div ng-messages="form['mainQuestionAction_'+$index].$error" role="alert"
+                                                 multiple>
+                                                <div ng-message="required" class="my-message">You must supply a action
+                                                    name.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container data-nodrag flex="10"
+                                                            style="margin: 0px; margin-top: 10px;">
+                                            &nbsp;&nbsp;<a href="" ng-click="removeItem($index)"
+                                                           ng-show="offer.mainQuestion.answerList.length > 1">
+                                            <span class="fa fa-times"></span>
+                                        </a>&nbsp;&nbsp;
+                                            <a href="" ng-click="newAnswer(this)"
+                                               ng-show=" ($index)+1 === offer.mainQuestion.answerList.length">
+                                                <span class="fa fa-plus"></span>
+                                            </a>
+                                        </md-input-container>
+
+                                    </div>
+
+
+                                    <!-- Confirm user fields -->
+                                    <div layout layout-sm="column"
+                                         style="padding-top: 10px; display: {{offer.mainQuestion.answerList[$index].action.textConfirmation ? 'flex' : 'none'}}"
+                                         id="{{'confirmUserFields_'+$index}}">
+                                        <md-input-container flex="100" style="margin: 0px;">
+                                            <label>Text Confirmation</label>
+                                            <input name="mainQuestionConfirm_{{$index}}"
+                                                   ng-model="offer.mainQuestion.answerList[$index].action.textConfirmation">
+                                            <div ng-messages="form['mainQuestionConfirm_'+$index].$error" role="alert"
+                                                 multiple>
+                                                <div ng-message="required" class="my-message">You must supply a text
+                                                    confirmation.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container flex="60" style="margin: 0px;">
+                                            <label>User Field</label>
+                                            <md-select name="mainQuestionUserField_{{$index}}"
+                                                       ng-model="offer.mainQuestion.answerList[$index].action.field">
+                                                <md-option value="name">Name</md-option>
+                                                <md-option value="email">Email</md-option>
+                                                <md-option value="cellphone">Cellphone</md-option>
+                                                <md-option value="telephone">Telephone</md-option>
+                                                <md-option value="zipcode">Zipcode</md-option>
+
+                                            </md-select>
+                                            <div ng-messages="form['mainQuestionUserField_'+$index].$error.$error"
+                                                 role="alert" multiple>
+                                                <div ng-message="required" class="my-message">You must supply a
+                                                    Affiliation
+                                                    name.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+
+
+                                    <!-- Input new Field -->
+                                    <div layout layout-sm="column"
+                                         style="padding-top: 10px; display: {{offer.mainQuestion.answerList[$index].action.textInput ? 'flex' : 'none'}}"
+                                         id="{{'inputNewField_'+$index}}">
+                                        <md-input-container flex="100" style="margin: 0px;">
+                                            <label>Text Input</label>
+                                            <input name="mainQuestionTextInput_{{$index}}"
+                                                   ng-model="offer.mainQuestion.answerList[$index].action.textInput">
+                                            <div ng-messages="form['mainQuestionTextInput_'+$index].$error" role="alert"
+                                                 multiple>
+                                                <div ng-message="required" class="my-message">You must supply a
+                                                    answer.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container flex="60" style="margin: 0px;">
+                                            <label>Field Tag</label>
+                                            <input name="mainQuestionFieldTag_{{$index}}"
+                                                   ng-model="offer.mainQuestion.answerList[$index].action.fieldTag">
+                                            <div ng-messages="form['mainQuestionFieldTag_'+$index].$error" role="alert"
+                                                 multiple>
+                                                <div ng-message="required" class="my-message">You must supply a
+                                                    answer.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+
+
+                                </md-content>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- SUB QUESTIONS-->
+                            <div id="{{'subQuestionSpace_'+subQuestionId}}"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+</div>

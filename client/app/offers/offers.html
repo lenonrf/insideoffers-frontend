@@ -1,0 +1,85 @@
+<div class="page page-table">
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">Offers</h2>
+        </div>
+        <div class="col-md-12">
+
+            <!--<uib-accordion close-others="oneAtATime" class="ui-accordion">
+                <uib-accordion-group model="filter" heading="Data Filter" is-open="false">
+                
+
+                    <div class="row">
+                        
+                        <div class="col-sm-12 col-xs-12">
+
+                            <div layout layout-sm="column">
+
+                               <md-input-container flex="50" >
+                                    <label>Affiliation</label>
+                                    <md-select  id="affiliation" name="affiliation" 
+                                        ng-model="filter.affiliationFilter">
+                                        <md-option selected value="all_aff">All</md-option>
+                                        <md-option ng-repeat="aff in affiliation" value="{{aff._id}}">
+                                            {{aff.name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <md-input-container flex="50" >
+                                    <label>Offer Type</label>
+                                    <md-select  id="offerTypeFilter" name="offerTypeFilter" ng-model="filter.offerTypeFilter">
+                                        <md-option selected value="all_offertype">All</md-option>
+                                        <md-option value="sponsoring">Sponsoring</md-option>
+                                        <md-option value="survey">Survey</md-option>
+                                        <md-option value="question">Question Hall</md-option>
+                                        <md-option value="balcony">Balcony</md-option>
+                                        
+                                    </md-select>
+                                </md-input-container>
+                                
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <div layout layout-sm="column">
+                                <md-input-container flex="{{(dateFilterType === 'custom') ? '50' : '100'}}">
+                                    <label>Data Filter Type</label>
+                                    <md-select ng-model="filter.dateFilterType" >
+                                        <md-option selected value="all_time">All Time</md-option>
+                                        <md-option value="this_month">This Month</md-option>
+                                        <md-option value="this_week">This Week</md-option>
+                                        <md-option value="today">Today</md-option>
+                                        <md-option value="custom">Custom</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <md-datepicker style="margin: 15px;" ng-show="filter.dateFilterType === 'custom'" flex="25" ng-model="filter.dateStartFilter" md-placeholder="Date Start"></md-datepicker>
+                                <md-datepicker style="margin: 15px;" ng-show="filter.dateFilterType === 'custom'" flex="25" ng-model="filter.dateEndFilter" md-placeholder="Date Start"></md-datepicker>                                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-lg-12 text-right">
+                            <md-button flex="10" ng-click="filter()" class="md-raised btn-w-xs md-primary">Filter</md-button>
+                        </div>
+                    </div>
+
+                </uib-accordion-group>                    
+            </uib-accordion> -->
+
+
+        </div>
+        <div class="col-md-12">
+            <listgrid />
+        </div>
+    </div>
+</div>

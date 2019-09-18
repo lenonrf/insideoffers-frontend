@@ -1,0 +1,241 @@
+
+
+
+<section class="page-form-ele page">
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix"><h2 class="section-header">My Hall</h2></div>
+        <div class="col-md-12">
+
+
+             <section class="panel panel-default table-dynamic">
+                <div class="table-filters">
+                    <div class="row">             
+                        <div class="col-sm-12 col-xs-12">
+                            <div layout layout-sm="column">
+                                <md-input-container flex style="margin: 0px;">
+                                    <label>Affiliation</label>
+                                    <md-select name="affiliation" 
+                                            ng-change="filterByAffiliation()" 
+                                            ng-model="affiliationFilter">
+                                        <md-option ng-repeat="aff in affiliation" value="{{aff._id}}">
+                                            {{aff.name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+           
+
+            <section class="panel panel-default panel-labeled" ng-show="showData">
+                <div class="panel-body">
+
+
+
+
+                    <!-- USER SEGMENTATION 
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <uib-accordion close-others="oneAtATime" class="ui-accordion">
+                                <uib-accordion-group heading="User Segmentation" is-open="false"> 
+
+                                    <table class="table table-bordered table-striped table-responsive">
+                                  
+                                        <tbody>
+                                            <tr ng-repeat="item in myhall.dynamicSegmentation">
+                                                <td><a href="/#/questions/edit?id={{item._id}}">{{item.title}}</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </uib-accordion-group>
+                                
+                            </uib-accordion>
+                        </div>
+                    </div>-->
+
+
+
+
+
+                    <!-- QUESTION -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <uib-accordion close-others="oneAtATime" class="ui-accordion">
+                                <uib-accordion-group heading="Questions ({{myhall.dynamicSegmentation.length}})" is-open="false"> 
+
+                                    <table class="table table-bordered table-striped table-responsive">
+                                  
+                                        <tbody>
+                                            <tr ng-repeat="item in myhall.dynamicSegmentation">
+                                                <td><a href="/#/questions/edit?id={{item._id}}">{{item.title}}</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </uib-accordion-group>
+                                
+                            </uib-accordion>
+                        </div>
+                    </div>
+
+
+                    <!-- OFFERS SNAPSHOT -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <uib-accordion close-others="oneAtATime" class="ui-accordion">
+                                <uib-accordion-group heading="Offers Snapshot" is-open="true"> 
+
+                                  <div class="ui-tab-container ui-tab-horizontal">
+                                        <uib-tabset justified="true" class="ui-tab">
+
+                                            <uib-tab heading="Sponsoring ({{myhall.sponsoring.length}})" ng-show="myhall.sponsoring.length > 0">
+                                                <section class="panel panel-default table-dynamic">
+                                                    <table class="table table-bordered table-striped table-responsive">
+                                                        <thead>
+                                                        <tr>
+                                                            <th ng-repeat="item in headerSponsoring">
+                                                                <div class="th"> {{item}} </div>
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody data-ng-model="myhall.sponsoring">
+
+                                                        <tr ng-repeat="item in myhall.sponsoring">
+
+                                                            <td><a href="/#/offers/edit?id={{item._id}}">{{item.name}}</a></td>
+                                                            <td>0</td>
+                                                            <td>0</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </section>
+                                            </uib-tab>
+
+
+
+
+
+                                            <uib-tab heading="Survey ({{myhall.survey.length}})" ng-show="myhall.survey.length > 0">
+                                                <!--<section class="panel panel-default table-dynamic">-->
+                                                <table id="table-container" class="table table-bordered table-striped table-responsive">
+                                                    <thead>
+                                                    <tr>
+                                                        <th ng-repeat="item in headerSurvey">
+                                                            <div class="th"> {{item}} </div>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody data-ng-model="myhall.survey">
+
+                                                        <tr ng-repeat="item in myhall.survey track by $index">
+
+                                                            <td>
+                                                                <i ng-click="order('up', $index, myhall.survey, 'survey')" ng-show="!$first" class="zmdi zmdi-triangle-up"></i>
+                                                                <i ng-click="order('down', $index, myhall.survey, 'survey')" ng-show="!$last" class="zmdi zmdi-triangle-down"></i>
+                                                            </td>
+
+                                                            <td><a href="/#/offers/edit?id={{item._id}}">{{item.name}}</a></td>
+                                                            <td>0</td>
+                                                            <td>{{item.stats.clicks.acceptance}}</td>
+                                                            <td>{{item.stats.clicks.refusal}}</td>
+                                                            <td>0</td>
+                                                            <td>0</td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </uib-tab>
+
+
+
+                                            <uib-tab heading="Question Hall ({{myhall.questionHall.length}})" ng-show="myhall.questionHall.length > 0">
+                                                <section class="panel panel-default table-dynamic">
+
+                                                <table class="table table-bordered table-striped table-responsive">
+                                                    <thead>
+                                                    <tr>
+                                                        <th ng-repeat="item in headerQuestionHall track by $index">
+                                                            <div class="th"> {{item}} </div>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody data-ng-model="myhall.questionHall">
+
+                                                    <tr ng-repeat="item in myhall.questionHall track by $index" >
+
+                                                        <td>
+                                                            <i ng-click="order('up', $index, myhall.questionHall, 'questionHall')" ng-show="!$first" class="zmdi zmdi-triangle-up"></i>
+                                                            <i ng-click="order('down', $index, myhall.questionHall, 'questionHall')" ng-show="!$last" class="zmdi zmdi-triangle-down"></i>
+                                                        </td>
+
+                                                        <td><a href="/#/offers/edit?id={{item._id}}">{{item.name}}</a></td>
+                                                        <td>0</td>
+                                                        <td>{{item.stats.clicks.acceptance}}</td>
+                                                        <td>{{item.stats.clicks.refusal}}</td>
+                                                        <td>0</td>
+                                                        <td>0</td>
+
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                </section>
+                                            </uib-tab>
+
+
+
+
+
+
+                                            <uib-tab heading="Balcony ({{myhall.balcony.length}})" ng-show="myhall.balcony.length > 0">
+                                                <section class="panel panel-default table-dynamic">
+                                                    <table class="table table-bordered table-striped table-responsive">
+                                                        <thead>
+                                                        <tr>
+                                                            <th ng-repeat="item in headerBalcony">
+                                                                <div class="th"> {{item}} </div>
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        <tr ng-repeat="item in myhall.balcony track by $index" >
+
+                                                            <td>
+                                                                <i ng-click="order('up', $index, myhall.balcony, 'balcony')" ng-show="!$first" class="zmdi zmdi-triangle-up"></i>
+                                                                <i ng-click="order('down', $index, myhall.balcony, 'balcony')" ng-show="!$last" class="zmdi zmdi-triangle-down"></i>
+                                                            </td>
+
+                                                            <td><a href="/#/offers/edit?id={{item._id}}">{{item.name}}</a></td>
+                                                            <td>0</td>
+                                                            <td>{{item.stats.clicks.acceptance}}</td>
+                                                            <td>{{item.stats.clicks.refusal}}</td>
+                                                            <td>0</td>
+                                                            <td>0</td>
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </section>
+                                            </uib-tab>
+                                        </uib-tabset>
+                                    </div>  
+
+                                </uib-accordion-group>
+                                
+                            </uib-accordion>
+                        </div>
+                    </div>
+                            
+                </div>
+            </section>
+
+        </div>
+    </div>
+</section>
